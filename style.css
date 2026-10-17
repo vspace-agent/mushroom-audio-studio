@@ -1,0 +1,59 @@
+* { box-sizing: border-box; }
+:root { font-family: Georgia, serif; color: #353b36; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #e8e6df url("./assets/background.png") center / cover fixed no-repeat;
+}
+.studio {
+  min-height: 100vh;
+  padding: clamp(30px, 6vw, 90px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+header { max-width: 600px; }
+.eyebrow, .section-label {
+  font: 600 11px/1.6 system-ui, sans-serif;
+  letter-spacing: .22em;
+}
+h1 {
+  margin: 18px 0 10px;
+  font-size: clamp(42px, 6vw, 82px);
+  font-weight: 400;
+  letter-spacing: -.055em;
+}
+.intro { font-size: 18px; }
+.workspace {
+  width: min(100%, 430px);
+  margin-top: clamp(45px, 9vh, 110px);
+  padding: clamp(24px, 4vw, 40px);
+  background: rgba(250, 249, 244, .86);
+  border: 1px solid rgba(60, 65, 57, .12);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+h2 { font-size: 28px; font-weight: 400; margin: 12px 0; }
+.description { font-size: 14px; line-height: 1.6; }
+form { display: grid; gap: 12px; margin-top: 26px; }
+label {
+  font: 600 12px system-ui, sans-serif;
+  margin-top: 8px;
+}
+input, select, button {
+  width: 100%;
+  padding: 13px;
+  border-radius: 4px;
+  font: 14px system-ui, sans-serif;
+}
+input, select { border: 1px solid #b9beb5; background: #fffefa; }
+button { border: 0; background: #485b4b; color: white; margin-top: 12px; }
+button:disabled { opacity: .55; cursor: not-allowed; }
+#status, footer { font: 12px/1.6 system-ui, sans-serif; }
+#status { color: #646b62; }
+footer { margin-top: auto; padding-top: 55px; }
+@media (max-width: 600px) {
+  body { background-attachment: scroll; }
+  .studio { padding: 30px 20px; }
+  .workspace { margin-top: 50px; }
+}
