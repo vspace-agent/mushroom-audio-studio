@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#e8e6df">
   <title>Mushroom Audio Studio</title>
-  <link rel="stylesheet" href="./style.css">
-  <script src="./app.js" defer></script>
+  <link rel="stylesheet" href="./style.css?v=ffc66d163f0c">
+<script src="./music.js?v=939d44227e82" defer></script>
 </head>
 <body>
   <main class="studio">
@@ -16,36 +16,64 @@
       <p class="intro">A little workshop for sound and music.</p>
     </header>
 
-    <section class="workspace" aria-labelledby="converter-title">
-      <p class="section-label">TOOL 01 / AUDIO EXTRACTION</p>
-      <h2 id="converter-title">YouTube → Audio</h2>
-      <p class="description">Convert videos you have permission to use into audio files.</p>
+    <section class="workspace" aria-labelledby="music-title">
+      <p class="section-label">AI MUSIC GENERATION</p>
+      <h2 id="music-title">Compose a little music</h2>
+      <p class="description">Describe the music you imagine. Our Kaggle composer will bring it to life.</p>
 
-      <form id="converter-form">
-        <label for="video-url">Video URL</label>
-        <input id="video-url" type="url"
-               placeholder="https://www.youtube.com/watch?v=..."
-               autocomplete="off" required>
+      <div class="music-sync-controls">
+        <button id="music-sync" type="button">Sync recordings</button>
+        <p id="music-sync-status" class="description" role="status" aria-live="polite"></p>
+      </div>
 
-        <label for="audio-format">Audio format</label>
-        <select id="audio-format">
-          <option value="mp3">MP3</option>
-          <option value="m4a">M4A</option>
-        </select>
+    <form id="music-form">
 
-        <div id="cloud-access" hidden>
-          <label for="cloud-passcode">Studio passcode</label>
-          <input id="cloud-passcode" type="password"
-                 autocomplete="off" placeholder="Enter your passcode">
+
+        <div id="music-batch-fields">
+          <p class="description">Paste one complete batch document prepared by Silas.</p>
+          <div id="music-batch-prompts">
+  <label for="music-batch-document">Batch composition document</label>
+  <textarea
+    id="music-batch-document"
+    rows="24"
+    spellcheck="false"
+    placeholder="misty_lake:&#10;Quiet instrumental ambient music, gentle piano,&#10;soft sustained strings, spacious atmosphere.&#10;&#10;mushroom_morning:&#10;Warm acoustic instrumental miniature, delicate plucked strings."
+  ></textarea>
+  <p class="music-batch-help">Paste Silas's complete document: batch_theme: first, then each composition filename: and its musical description.</p>
+  <div id="music-batch-preview" aria-live="polite"></div>
+</div>
+          
+
+          <label for="music-variations">Variations per composition</label>
+          <select id="music-variations">
+            <option value="1">1 variation</option>
+            <option value="2">2 variations</option>
+            <option value="3" selected>3 variations</option>
+          </select>
         </div>
 
-        <button id="convert-button" type="submit" disabled>
-          Convert audio
+        <label for="music-route">Generation model</label>
+        <select id="music-route">
+          <option value="turbo">Turbo — faster composition</option>
+          <option value="sft_lm">SFT + LM — alternative model</option>
+        </select>
+
+        <label for="music-duration">Duration</label>
+        <select id="music-duration">
+          <option value="15">15 seconds</option>
+          <option value="30">30 seconds</option>
+          <option value="45" selected>45 seconds</option>
+          <option value="60">60 seconds</option>
+          <option value="90">90 seconds</option>
+        </select>
+
+        <button id="music-generate" type="submit" disabled>
+          Generate batch
         </button>
       </form>
 
-      <p id="status" role="status" aria-live="polite">
-        Converter connection pending.
+      <p id="music-status" role="status" aria-live="polite">
+        Composer connection pending.
       </p>
     </section>
 

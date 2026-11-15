@@ -66,7 +66,11 @@ form.addEventListener("submit", async (event) => {
       status.textContent = "Audio downloaded: " + filename;
     } else {
       const result = await response.json();
-      if (result.status !== "saved" || !result.filename) {
+      if (result.status === "playlist_processed") {
+      status.textContent = "Playlist saved: " + result.folder;
+      return;
+    }
+    if (result.status !== "saved" || !result.filename) {
         throw new Error("Unexpected converter response.");
       }
       status.textContent = "Saved to audio library: " + result.filename;

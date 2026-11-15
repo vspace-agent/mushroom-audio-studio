@@ -57,3 +57,48 @@ footer { margin-top: auto; padding-top: 55px; }
   .studio { padding: 30px 20px; }
   .workspace { margin-top: 50px; }
 }
+
+/* Tool 02 shares the existing translucent workspace design. */
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #b9beb5;
+  border-radius: 4px;
+  background: #fffefa;
+  color: inherit;
+  font: 14px/1.5 system-ui, sans-serif;
+  resize: vertical;
+}
+#music-status {
+  color: #646b62;
+  font: 12px/1.6 system-ui, sans-serif;
+}
+
+
+/* Audio Studio: comfortable structured batch-document editor. */
+#music-batch-prompts {
+  width: 100%;
+  min-width: 0;
+}
+
+#music-batch-document {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 480px;
+  padding: 18px 20px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.65;
+  resize: vertical;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+#music-batch-preview {
+  width: 100%;
+  overflow-wrap: anywhere;
+}
