@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#e8e6df">
   <title>Mushroom Audio Studio</title>
-  <link rel="stylesheet" href="./style.css?v=ffc66d163f0c">
-<script src="./music.js?v=72e2ea753fd2" defer></script>
+  <link rel="stylesheet" href="./style.css?v=08509ab1d0d6">
+<script src="./music.js?v=024493b6f0c1" defer></script>
 </head>
 <body>
   <main class="studio">
@@ -71,6 +71,11 @@
           Generate batch
         </button>
       </form>
+
+      <section id="music-recordings" class="music-recordings" aria-label="Generated recordings" hidden>
+        <h3>Recordings</h3>
+        <div id="music-recordings-list"></div>
+      </section>
 
       <p id="music-status" role="status" aria-live="polite">
         Composer connection pending.

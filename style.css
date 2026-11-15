@@ -102,3 +102,12 @@ textarea {
   width: 100%;
   overflow-wrap: anywhere;
 }
+
+
+/* Play verified cloud recordings directly in the Audio Studio. */
+.music-recordings { margin-top: 24px; }
+.music-recordings[hidden] { display: none; }
+.music-recordings h3 { font-size: 19px; font-weight: 400; }
+.music-recording { margin: 16px 0; overflow-wrap: anywhere; }
+.music-recording p { font: 13px/1.5 system-ui, sans-serif; }
+.music-recording audio { display: block; width: 100%; }

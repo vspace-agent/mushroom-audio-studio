@@ -92,6 +92,50 @@
   }
 
 
+  const recordingsSection = document.querySelector("#music-recordings");
+  const recordingsList = document.querySelector("#music-recordings-list");
+  let loadedRecordingJob = null;
+
+  async function showRecordings(jobId) {
+    if (!hosted || !jobId || loadedRecordingJob === jobId) return;
+    loadedRecordingJob = jobId;
+    recordingsSection.hidden = false;
+    recordingsList.replaceChildren();
+    const notice = document.createElement("p");
+    notice.textContent = "Loading recordings…";
+    recordingsList.appendChild(notice);
+
+    try {
+      const response = await fetch(api(`/api/music/jobs/${encodeURIComponent(jobId)}/tracks`));
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const result = await response.json();
+      recordingsList.replaceChildren();
+
+      if (!Array.isArray(result.tracks) || result.tracks.length === 0) {
+        notice.textContent = "No recordings available.";
+        recordingsList.appendChild(notice);
+        return;
+      }
+
+      for (const track of result.tracks) {
+        const item = document.createElement("div");
+        item.className = "music-recording";
+        const label = document.createElement("p");
+        label.textContent = track.name;
+        const player = document.createElement("audio");
+        player.controls = true;
+        player.preload = "none";
+        player.src = api(track.url);
+        item.append(label, player);
+        recordingsList.appendChild(item);
+      }
+    } catch (error) {
+      loadedRecordingJob = null;
+      notice.textContent = `Recordings unavailable: ${error.message}`;
+      recordingsList.replaceChildren(notice);
+    }
+  }
+
   function render(job) {
     const running = job.state === "running";
     button.disabled = running;
@@ -129,7 +173,8 @@
         ? `Waiting for Kaggle (${kaggleStatus})…`
         : `${label}…`) + elapsed);
     } else if (job.state === "complete") {
-      message("Generation complete. Recordings are stored in the audio archive.");
+      message("Generation complete. Recordings are ready to play.");
+      void showRecordings(job.id);
       stopPolling();
     } else if (job.state === "error") {
       message(job.error || "The composition could not be completed.");
@@ -182,6 +227,9 @@
       return;
     }
 
+    loadedRecordingJob = null;
+    recordingsSection.hidden = true;
+    recordingsList.replaceChildren();
     button.disabled = true;
     message("Sending your composition to Kaggle…");
 
