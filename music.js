@@ -144,6 +144,12 @@
     if (running) {
       const stages = {
         starting: "Preparing your composition",
+        accepted: "Composition accepted by cloud",
+        kaggle_submitting: "Submitting composition to Kaggle",
+        kaggle_submitted: "Kaggle is processing your composition",
+        collecting: "Collecting generated recordings",
+        gcs_verified: "Recordings verified in cloud storage",
+        worker_failed: "Cloud generation failed",
         PACKAGE_READY: "Composition package prepared",
         SUBMITTING: "Sending composition to Kaggle",
         SUBMITTED: "Composition submitted to Kaggle",
@@ -162,7 +168,7 @@
       };
       const kaggleStatus = job.kaggle_status;
       const label = stages[job.stage] ||
-        job.stage.replaceAll("_", " ").toLowerCase();
+        String(job.stage || "running").replaceAll("_", " ").toLowerCase();
       const waiting = job.stage === "MONITORING" &&
         kaggleStatus && kaggleStatus !== "COMPLETE";
       const seconds = job.elapsed_seconds;
