@@ -1,6 +1,11 @@
 // Connect Audio Studio's local music composer to Kaggle generation and playback.
 
 (() => {
+  const hosted = location.hostname === "vspace-agent.github.io";
+  const apiBase = hosted
+    ? "https://audio-studio-api-jwu3axpvwq-ey.a.run.app"
+    : "";
+  const api = (path) => apiBase + path;
   const form = document.querySelector("#music-form");
   const syncButton = document.querySelector("#music-sync");
   const syncStatus = document.querySelector("#music-sync-status");
@@ -8,7 +13,7 @@
 
   async function refreshSync() {
     try {
-      const response = await fetch("/api/music/sync-evaluation");
+      const response = await fetch(api("/api/music/sync-evaluation"));
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const job = await response.json();
       syncButton.disabled = job.state === "running";
@@ -25,11 +30,16 @@
     }
   }
 
+  if (hosted) {
+    syncButton.disabled = true;
+    syncStatus.textContent = "Cloud recordings are archived automatically.";
+  }
+
   syncButton.addEventListener("click", async () => {
     syncButton.disabled = true;
     syncStatus.textContent = "Starting synchronization…";
     try {
-      const response = await fetch("/api/music/sync-evaluation", {method: "POST"});
+      const response = await fetch(api("/api/music/sync-evaluation"), {method: "POST"});
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       await refreshSync();
     } catch (error) {
@@ -37,11 +47,32 @@
       syncStatus.textContent = `Could not start sync: ${error.message}`;
     }
   });
-  refreshSync();
+  if (!hosted) refreshSync();
 
   const variations = document.querySelector("#music-variations");
 
   const route = document.querySelector("#music-route");
+  let turboVariations = variations.value;
+
+  function updateVariationMode() {
+    if (route.value === "sft_lm") {
+      if (!variations.disabled) turboVariations = variations.value;
+      variations.value = "1";
+      variations.disabled = true;
+      variations.title = "SFT + LM generates one variation per composition.";
+    } else {
+      variations.disabled = false;
+      variations.value = turboVariations;
+      variations.title = "";
+    }
+  }
+
+  variations.addEventListener("change", () => {
+    if (route.value !== "sft_lm") turboVariations = variations.value;
+  });
+  route.addEventListener("change", updateVariationMode);
+  updateVariationMode();
+
   const duration = document.querySelector("#music-duration");
   const button = document.querySelector("#music-generate");
   const status = document.querySelector("#music-status");
@@ -122,7 +153,7 @@
 
   async function refresh() {
     try {
-      const job = await requestJSON("/api/music/status");
+      const job = await requestJSON(api("/api/music/status"));
       render(job);
     } catch (error) {
       stopPolling();
@@ -156,7 +187,7 @@
 
     try {
       const job = await requestJSON(
-        "/api/music/generate-batch",
+        api("/api/music/generate-batch"),
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
