@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e8e6df">
+  <title>Mushroom Audio Studio</title>
+  <link rel="stylesheet" href="./style.css?v=08509ab1d0d6">
+<script src="./music.js?v=6a5865ff1f5d" defer></script>
+</head>
+<body>
+  <main class="studio">
+    <header>
+      <p class="eyebrow">MUSHROOM HOUSE 🍄 STUDIO</p>
+      <h1>Audio Studio</h1>
+      <p class="intro">A little workshop for sound and music.</p>
+    </header>
+
+    <section class="workspace" aria-labelledby="music-title">
+      <p class="section-label">AI MUSIC GENERATION</p>
+      <h2 id="music-title">Compose a little music</h2>
+      <p class="description">Describe the music you imagine. Our Kaggle composer will bring it to life.</p>
+
+
+    <form id="music-form">
+
+
+        <div id="music-batch-fields">
+          <p class="description">Paste one complete batch document prepared by Silas.</p>
+          <div id="music-batch-prompts">
+  <label for="music-batch-document">Batch composition document</label>
+  <textarea
+    id="music-batch-document"
+    rows="24"
+    spellcheck="false"
+    placeholder="misty_lake:&#10;Quiet instrumental ambient music, gentle piano,&#10;soft sustained strings, spacious atmosphere.&#10;&#10;mushroom_morning:&#10;Warm acoustic instrumental miniature, delicate plucked strings."
+  ></textarea>
+  <p class="music-batch-help">Paste Silas's complete document: batch_theme: first, then each composition filename: and its musical description.</p>
+  <div id="music-batch-preview" aria-live="polite"></div>
+</div>
+
+
+          <label>Generation pipeline</label>
+          <p class="music-batch-help">
+            A — Turbo · 3 recordings per composition<br>
+            B — SFT + LM · 1 recording per composition<br>
+            C — Turbo · 3 recordings per composition<br><br>
+            Three sequential turns · 7 expected recordings per composition
+          </p>
+        </div>
+
+        <label for="music-duration">Duration</label>
+        <select id="music-duration">
+          <option value="15">15 seconds</option>
+          <option value="30">30 seconds</option>
+          <option value="45">45 seconds</option>
+          <option value="60">60 seconds</option>
+          <option value="90" selected>90 seconds</option>
+        </select>
+
+        <button id="music-generate" type="submit" disabled>
+          Generate batch
+        </button>
+      </form>
+
+
+
+      <p id="music-status" role="status" aria-live="polite">
+        Composer connection pending.
+      </p>
+    </section>
+
+    <footer>More little sound tools will join this workshop.</footer>
+  </main>
+</body>
+</html>
